@@ -1,3 +1,4 @@
+// fba9dc272a443cf9fdb984676a7732a6a082f4c0
 /**
  * @class The built-in Array class.
  * @name Array
@@ -4990,6 +4991,7 @@ pv.Scene = pv.SvgScene = {
       "stroke": "none",
       "stroke-opacity": 1,
       "stroke-width": 1.5,
+      "stroke-dasharray": "none",
       "stroke-linejoin": "miter"
     },
     css: {
@@ -5584,7 +5586,8 @@ pv.SvgScene.area = function(scenes) {
       "fill-opacity": fill.opacity || null,
       "stroke": stroke.color,
       "stroke-opacity": stroke.opacity || null,
-      "stroke-width": stroke.opacity ? s.lineWidth / this.scale : null
+      "stroke-width": stroke.opacity ? s.lineWidth / this.scale : null,
+      "stroke-dasharray": s.strokeDasharray
     });
   return this.append(e, scenes, 0);
 };
@@ -5653,7 +5656,8 @@ pv.SvgScene.areaSegment = function(scenes) {
         "fill-opacity": fill.opacity || null,
         "stroke": stroke.color,
         "stroke-opacity": stroke.opacity || null,
-        "stroke-width": stroke.opacity ? s1.lineWidth / this.scale : null
+        "stroke-width": stroke.opacity ? s1.lineWidth / this.scale : null,
+        "stroke-dasharray": s1.strokeDasharray
       });
     e = this.append(e, scenes, i);
   }
@@ -5897,6 +5901,7 @@ pv.SvgScene.line = function(scenes) {
       "stroke": stroke.color,
       "stroke-opacity": stroke.opacity || null,
       "stroke-width": stroke.opacity ? s.lineWidth / this.scale : null,
+      "stroke-dasharray": s.strokeDasharray,
       "stroke-linejoin": s.lineJoin
     });
   return this.append(e, scenes, 0);
@@ -5943,6 +5948,7 @@ pv.SvgScene.lineSegment = function(scenes) {
         "stroke": stroke.color,
         "stroke-opacity": stroke.opacity || null,
         "stroke-width": stroke.opacity ? s1.lineWidth / this.scale : null,
+        "stroke-dasharray": s1.strokeDasharray,
         "stroke-linejoin": s1.lineJoin
       });
     e = this.append(e, scenes, i);
@@ -6138,7 +6144,8 @@ pv.SvgScene.stroke = function(e, scenes, i) {
         "fill": null,
         "stroke": stroke.color,
         "stroke-opacity": stroke.opacity,
-        "stroke-width": s.lineWidth / this.scale
+        "stroke-width": s.lineWidth / this.scale,
+        "stroke-dasharray": s.strokeDasharray
       });
     e = this.append(e, scenes, i);
   }
@@ -6164,6 +6171,7 @@ pv.SvgScene.rule = function(scenes) {
         "y2": s.top + s.height,
         "stroke": stroke.color,
         "stroke-opacity": stroke.opacity,
+        "stroke-dasharray": s.strokeDasharray,
         "stroke-width": s.lineWidth / this.scale
       });
     e = this.append(e, scenes, i);
@@ -7566,6 +7574,7 @@ pv.Area.prototype = pv.extend(pv.Mark)
     .property("fillStyle", pv.color)
     .property("segmented", Boolean)
     .property("interpolate", String)
+    .property("strokeDasharray", String)
     .property("tension", Number);
 
 pv.Area.prototype.type = "area";
@@ -8280,6 +8289,7 @@ pv.Line.prototype = pv.extend(pv.Mark)
     .property("strokeStyle", pv.color)
     .property("fillStyle", pv.color)
     .property("segmented", Boolean)
+    .property("strokeDasharray", String)
     .property("interpolate", String)
     .property("eccentricity", Number)
     .property("tension", Number);
@@ -8393,6 +8403,7 @@ pv.Line.prototype.defaults = new pv.Line()
     .lineJoin("miter")
     .lineWidth(1.5)
     .strokeStyle(pv.Colors.category10().by(pv.parent))
+    .strokeDasharray("")
     .interpolate("linear")
     .eccentricity(0)
     .tension(.7);
